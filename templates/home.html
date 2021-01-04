@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Langar&display=swap" rel="stylesheet">
+    <script type="application/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="application/javascript" src="static/functionality.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Mushroom App</title>
+    <style>
+        body {
+            background: #5A3F37; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to bottom, #2C7744, #5A3F37); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to bottom, #2C7744, #5A3F37); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+            height: 100vh;
+            display: flex;
+        }
+
+        #second_bg {
+            background-image: url(/static/mushroom_background-01.svg);
+            background-size: cover;
+            background-position: bottom;
+            background-repeat: no-repeat;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 30px;
+            flex: 1;
+            flex-direction: column;
+            margin: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        #search_wrapper {
+            background: rgba(234, 232, 219, .42);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 10px;
+            width: 300px;
+            margin-top: 15px;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        #search {
+            font-family: 'Langar', cursive;
+            background: transparent;
+            border: 0 none;
+            width: 200px;
+            font-size: 15pt;
+            color: #2a2a2a;
+            margin: 20px;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #6b6b6b;
+            opacity: 1; /* Firefox */
+        }
+
+
+        #title {
+            font-family: 'Cinzel Decorative', cursive;
+            margin-bottom: 0;
+            color: white;
+            font-size: 30pt;
+            font-weight: 700;
+            margin-top: 150px;
+        }
+
+        @keyframes float {
+            0% {
+                box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.6);
+                transform: translatey(0px);
+            }
+            50% {
+                box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+                transform: translatey(-10px);
+            }
+            100% {
+                box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+                transform: translatey(0px);
+            }
+        }
+
+        #footer {
+            font-family: 'Langar', cursive;
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            height: 20px;
+            text-align: center;
+            color: #afafaf;
+
+        }
+
+        .search-result span {
+            flex: 1;
+            margin-top: 10px;
+        }
+
+        .search-result {
+        {#Javascript adds this later, it is not unused#} display: flex;
+            padding: 10px 20px;
+        }
+
+        .search-result:hover {
+        {#Javascript adds this later, it is not unused#} background: rgba(0, 0, 0, 0.16);
+        }
+
+        .search-result img {
+            width: 45px;
+            border-radius: 10px;
+            margin-bottom: 5px
+        }
+
+        @media only screen and (max-width: 768px) {
+            #second_bg {
+                background-position: -100px !important;
+                background-size: cover !important;
+                margin: 0;
+                border-radius: 0;
+            }
+
+            body {
+                margin: 0;
+            }
+
+            #title {
+                font-size: 17pt;
+                margin-top: 95px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="second_bg">
+    <h1 id="title">Mushrooms Finder</h1>
+    <div id="search_wrapper">
+        <input id="search" autocomplete="off" placeholder="Enter a name" type="text">
+        <div class="search-results">
+        </div>
+    </div>
+    <div id="footer">
+        <span>Built for mushroom foragers by Chana Lim</span>
+    </div>
+</div>
+</body>
+</html>
