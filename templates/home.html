@@ -5,38 +5,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Langar&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/background_style.css"/>
+
+    <script src="https://kit.fontawesome.com/8ca0a545f6.js" crossorigin="anonymous"></script>
     <script type="application/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="application/javascript" src="static/functionality.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Mushroom App</title>
+    <title>Mushrooms Finder</title>
     <style>
-        body {
-            background: #5A3F37; /* fallback for old browsers */
-            background: -webkit-linear-gradient(to bottom, #2C7744, #5A3F37); /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to bottom, #2C7744, #5A3F37); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-            height: 100vh;
-            display: flex;
+        #footer {
+            position: fixed;
+            bottom: 0;
         }
-
-        #second_bg {
-            background-image: url(/static/mushroom_background-01.svg);
-            background-size: cover;
-            background-position: bottom;
-            background-repeat: no-repeat;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border-radius: 30px;
-            flex: 1;
-            flex-direction: column;
-            margin: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
         #search_wrapper {
             background: rgba(234, 232, 219, .42);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
@@ -74,7 +55,6 @@
             color: white;
             font-size: 30pt;
             font-weight: 700;
-            margin-top: 150px;
         }
 
         @keyframes float {
@@ -90,17 +70,6 @@
                 box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
                 transform: translatey(0px);
             }
-        }
-
-        #footer {
-            font-family: 'Langar', cursive;
-            position: fixed;
-            bottom: 10px;
-            width: 100%;
-            height: 20px;
-            text-align: center;
-            color: #afafaf;
-
         }
 
         .search-result span {
@@ -124,17 +93,6 @@
         }
 
         @media only screen and (max-width: 768px) {
-            #second_bg {
-                background-position: -100px !important;
-                background-size: cover !important;
-                margin: 0;
-                border-radius: 0;
-            }
-
-            body {
-                margin: 0;
-            }
-
             #title {
                 font-size: 17pt;
                 margin-top: 95px;
@@ -144,6 +102,13 @@
 </head>
 <body>
 <div id="second_bg">
+    <div class="topnav">
+        <a href="/" id="brand-logo"><img src="/static/mushroom_logo.svg"></a>
+        <a href="contact"><i class="fas fa-paper-plane"></i> Contact</a>
+        <a href="about"><i class="fas fa-info-circle"></i> About</a>
+        <a href="map"><i class="fas fa-tree"></i> Map</a>
+        <a class="active" href="/"><i class="fa fa-home"></i> Home</a>
+    </div>
     <h1 id="title">Mushrooms Finder</h1>
     <div id="search_wrapper">
         <input id="search" autocomplete="off" placeholder="Enter a name" type="text">

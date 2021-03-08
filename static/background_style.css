@@ -1,0 +1,91 @@
+body {
+    background: #5A3F37; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #2C7744, #5A3F37); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #2C7744, #5A3F37); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    display: flex;
+    min-height: 100vh;
+}
+
+#second_bg {
+    background-image: url(/static/mushroom_background-01.svg);
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 30px;
+    flex: 1;
+    flex-direction: column;
+    margin: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.inner_container {
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius:30px;
+}
+
+#footer {
+    font-family: 'Langar', cursive;
+    padding-bottom: 10px;
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    color: #afafaf;
+
+}
+
+
+@media only screen and (max-width: 768px) {
+    #second_bg {
+        background-position: -100px !important;
+        background-size: cover !important;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    body {
+        margin: 0;
+    }
+}
+
+.topnav {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 30px;
+}
+
+#brand-logo {
+    float: left;
+    margin-left: 30px;
+    width: 80px;
+    opacity: 0.8;
+    padding: 0px;
+    margin-top: 0px;
+}
+
+.topnav a {
+    float: right;
+    color: #2a2a2aad;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+.topnav a:hover {
+    background-color: #0303031a;
+    color: black;
+    border-radius: 10px;
+}
+
+.topnav a.active {
+    background-color: #0303031a;
+    color: #2a2a2aad;
+    border-radius: 10px;
+}
