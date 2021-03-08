@@ -100,9 +100,9 @@ def search_mushrooms():
 
     return jsonify([
                        item for item in mushroom_info
-                       if term in item['taxon'].get('name', '')
-                          or term in item['taxon'].get('preferred_common_name', '')
-                          or term in item['taxon'].get('english_common_name', '')
+                       if term.lower() in item['taxon'].get('name', '').lower()
+                       or term.lower() in item['taxon'].get('preferred_common_name', '').lower()
+                       or term.lower() in item['taxon'].get('english_common_name', '').lower()
                    ][0:5])
 
 
