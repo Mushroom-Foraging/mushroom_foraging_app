@@ -3,8 +3,12 @@ $(window).on('load', onLoad);
 function onLoad() {
     const urlParams = new URLSearchParams(window.location.search);
     const taxon_id = urlParams.get('taxon_id');
-    getObservations(taxon_id, 42.506682, -71.097164)
-    getObservations_withoutID(42.506682, -71.097164)
+    if (taxon_id != null && taxon_id !== "") {
+        getObservations(taxon_id, 42.506682, -71.097164);
+    } else {
+        getObservations_withoutID(42.506682, -71.097164);
+    }
+
     console.log(taxon_id)
 }
 
@@ -16,15 +20,13 @@ function getObservations(taxon_id, lat, lng) {
 }
 
 function getObservations_withoutID(lat, lng) {
-    $.get("/api/v1/locations?&lat=" + lat + "&lng=" + lng, function (data) {
-        console.log(data);
-        plotMushroomMarkers(data)
-    })
+    const mushroom_and_lichens = 47169;
+    getObservations(mushroom_and_lichens, lat, lng);
 }
 
 function plotMushroomMarkers(observations) {
     for (let item of observations) {
-        var url = "/static/generic_mushroom.svg";
+        let url = "/static/generic_mushroom.svg";
         if (item['photos'].length > 0) {
             url = item['photos'][0];
         }
@@ -46,11 +48,42 @@ function plotMushroomMarkers(observations) {
 }
 
 function populateDetails(observation) {
-    $(".mushroom_image").attr("src", observation['photos'][0].replace('square', 'large'));
+    console.log(observation);
+    if (observation['photos'].length > 0) {
+        $(".mushroom_image").attr("src", observation['photos'][0].replace('square', 'large'));
+    }
+    $("#mushroom_title").text(observation['preferred_common_name']);
+    $("#mushroom_scientific").text(observation['name']);
+    $("#mushroom_address").text(observation['name']);
+
+    let url = observation['wikipedia_url'];
+    if (url != null) {
+        let splitUrl = url.split('/');
+        let id = splitUrl[splitUrl.length - 1];
+
+        $('.circular').show();
+        $("#mushroom_description").hide();
+
+        $.get("/api/v1/summary?id=" + id, function (data) {
+            $('.circular').hide();
+            $("#mushroom_description").show();
+            $("#mushroom_description").text(data);
+        });
+    }
+
+    $(".btn-directions").unbind('click');
+    $(".btn-directions").click(function () {
+        let lng = observation["coordinates"][0];
+        let lat = observation["coordinates"][1];
+        console.log("Going to: " + observation["coordinates"]);
+        window.open("https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng, '_blank');
+    });
 }
 
 let map;
 
+// Used, don't delete. Called from map.html
+// noinspection JSUnusedGlobalSymbols
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: {lat: 42.506682, lng: -71.097164},

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import pickle
 import os
 import requests
+import wikipedia
 
 app = Flask(__name__)
 script_dir = os.path.dirname(__file__)
@@ -43,7 +44,7 @@ def inaturalist_request_observations(taxon_id, lat, lng):
         "taxon_id": taxon_id,
         "lat": lat,
         "lng": lng,
-        "radius": 32
+        "radius": 50
     }
     response = requests.request("GET", url, headers=None, params=querystring)
     if response.status_code != 200:
@@ -113,6 +114,13 @@ def mushroom_locations():
     lng = request.args.get("lng")
     print(f"Getting observations coordinates from taxon ID: {taxon_id}")
     return jsonify(inaturalist_request_observations(taxon_id, lat, lng))
+
+
+@app.route('/api/v1/summary')
+def mushroom_summary():
+    wikipedia_id = request.args.get("id")
+    print("Searching for %s" % wikipedia_id)
+    return wikipedia.summary(wikipedia_id, sentences=5, auto_suggest=False)
 
 
 if __name__ == '__main__':

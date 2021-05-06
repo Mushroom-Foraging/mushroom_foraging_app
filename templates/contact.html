@@ -25,6 +25,7 @@
             position: fixed;
             bottom: 10px;
         }
+
         .inner_container {
             display: flex;
             flex-direction: column;
@@ -71,61 +72,33 @@
                     We are happy to answer any questions regarding the Mushroom Finder app. Please leave your name
                     and
                     contact information.<br>
-                    <strong>Email:</strong><a href="mailto:creator@outlook.com">creator@outlook.com</a><br>
+                    <strong>Email:</strong><a href="mailto:creator@outlook.com"> creator@outlook.com</a><br>
                 </p>
             </div>
             <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                    <input type="text" class="form-control" id="inputName" placeholder="Name" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputText" class="col-sm-2 col-form-label">Comment</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="3" id="inputText" placeholder="Comment" required></textarea>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">Sign in</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </form>
-        {##}
-        {#            <form class="contactForm" method="post">#}
-        {#                <fieldset style="padding-left: 30px;margin: 10px 100px 100px;padding-top: 0;">#}
-        {#                    <div>#}
-        {#                        <label for="first_name">First Name <span class="required">*</span></label>#}
-        {#                        <input name="first_name" type="text" id="first_name" tabindex="1"#}
-        {#                               style="margin: 5px;padding-left: 24px;">#}
-        {#                    </div>#}
-        {##}
-        {#                    <div>#}
-        {#                        <label for="last_name">Last Name <span class="required">*</span></label>#}
-        {#                        <input type="text" name="last_name" id="last_name" tabindex="2"#}
-        {#                               style="margin: 5px;padding-left: 25px;">#}
-        {#                    </div>#}
-        {##}
-        {#                    <div>#}
-        {#                        <label for="email">Email Address <span class="required">*</span></label>#}
-        {#                        <input type="text" name="email" id="email" class="medium" tabindex="3" style="margin: 5px;">#}
-        {#                    </div>#}
-        {##}
-        {#                    <div>#}
-        {#                        <label>Questions/Comments/Concern <span class="required">*</span></label>#}
-        {#                    </div>#}
-        {#                    <div>#}
-        {#				    <textarea name="comments" id="comments" class="textarea medium" tabindex="9" rows="10" cols="50"#}
-        {#                              style="padding-right: 600px;#}
-        {#				padding-bottom: 80px;">#}
-        {#                    </textarea>#}
-        {#                    </div>#}
-        {#                    <div class="buforms_footer">#}
-        {#                        <input type="submit" class="button" name="submit" value="Submit" tabindex="10">#}
-        {#                    </div>#}
-        {#                </fieldset>#}
-        {#            </form>#}
         <div id="footer">
             <span style="color: #2a2a2a;">Built for mushroom foragers by Chana Lim</span>
         </div>
