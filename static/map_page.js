@@ -1,15 +1,63 @@
-$(window).on('load', onLoad);
+let map;
 
-function onLoad() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const taxon_id = urlParams.get('taxon_id');
-    if (taxon_id != null && taxon_id !== "") {
-        getObservations(taxon_id, 42.506682, -71.097164);
-    } else {
-        getObservations_withoutID(42.506682, -71.097164);
-    }
+// Used, don't delete. Called from map.html
+// noinspection JSUnusedGlobalSymbols
+function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: {lat: 42.506682, lng: -71.097164},
+        zoom: 12,
+        mapId: '55dfd65b84060eeb'
+    });
+    infoWindow = new google.maps.InfoWindow();
+    const locationButton = document.createElement("button");
+    locationButton.textContent = "Allow access to nearest location.";
+    locationButton.classList.add("btn");
+    locationButton.classList.add("btn-primary");
+    map.controls[google.maps.ControlPosition.CENTER].push(locationButton);
+    locationButton.addEventListener("click", () => {
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    locationButton.remove();
+                    const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+                    map.setCenter(pos);
+                    new google.maps.Marker({
+                        position: {lat: 42.506682, lng: -71.097164},
+                        map: map,
+                    });
 
-    console.log(taxon_id)
+                    // Get mushrooms in user location
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const taxon_id = urlParams.get('taxon_id');
+                    if (taxon_id != null && taxon_id !== "") {
+                        getObservations(taxon_id, position.coords.latitude, position.coords.longitude);
+                    } else {
+                        getObservations_withoutID(position.coords.latitude, position.coords.longitude);
+                    }
+                },
+                () => {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                }
+            );
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    });
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+        browserHasGeolocation
+            ? "There was a problem getting your location, please try reopening your browser."
+            : "There was a problem getting your location, please try another browser."
+    );
+    infoWindow.open(map);
 }
 
 function getObservations(taxon_id, lat, lng) {
@@ -77,21 +125,5 @@ function populateDetails(observation) {
         let lat = observation["coordinates"][1];
         console.log("Going to: " + observation["coordinates"]);
         window.open("https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng, '_blank');
-    });
-}
-
-let map;
-
-// Used, don't delete. Called from map.html
-// noinspection JSUnusedGlobalSymbols
-function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: {lat: 42.506682, lng: -71.097164},
-        zoom: 12,
-        mapId: '55dfd65b84060eeb'
-    });
-    new google.maps.Marker({
-        position: {lat: 42.506682, lng: -71.097164},
-        map: map,
     });
 }
