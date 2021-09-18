@@ -3,51 +3,72 @@ let map;
 // Used, don't delete. Called from map.html
 // noinspection JSUnusedGlobalSymbols
 function initMap() {
+    console.log("Init map.");
     map = new google.maps.Map(document.getElementById("map"), {
         center: {lat: 42.506682, lng: -71.097164},
-        zoom: 12,
+        zoom: 10,
         mapId: '55dfd65b84060eeb'
     });
-    infoWindow = new google.maps.InfoWindow();
-    const locationButton = document.createElement("button");
-    locationButton.textContent = "Allow access to nearest location.";
-    locationButton.classList.add("btn");
-    locationButton.classList.add("btn-primary");
-    map.controls[google.maps.ControlPosition.CENTER].push(locationButton);
-    locationButton.addEventListener("click", () => {
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    locationButton.remove();
-                    const pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude,
-                    };
-                    map.setCenter(pos);
-                    new google.maps.Marker({
-                        position: {lat: 42.506682, lng: -71.097164},
-                        map: map,
-                    });
+}
 
-                    // Get mushrooms in user location
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const taxon_id = urlParams.get('taxon_id');
-                    if (taxon_id != null && taxon_id !== "") {
-                        getObservations(taxon_id, position.coords.latitude, position.coords.longitude);
-                    } else {
-                        getObservations_withoutID(position.coords.latitude, position.coords.longitude);
-                    }
-                },
-                () => {
-                    handleLocationError(true, infoWindow, map.getCenter());
-                }
-            );
-        } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-        }
+$(document).ready(function() {
+    console.log("Page is loaded.");
+    if (navigator.geolocation) {
+        navigator.permissions.query({name:'geolocation'}).then((status) => {
+            if (status.state === "prompt") {
+                const locationButton = document.createElement("button");
+                locationButton.textContent = "Allow access to nearest location.";
+                locationButton.classList.add("btn");
+                locationButton.classList.add("btn-primary");
+                map.controls[google.maps.ControlPosition.CENTER].push(locationButton);
+                locationButton.addEventListener("click", () => {
+                    requestLocationPermission();
+                    locationButton.remove();
+                });
+            } else if (status.state === "granted") {
+                requestLocationPermission();
+            } else  if (status.state === "denied") {
+                let infoWindow = new google.maps.InfoWindow();
+                handleLocationError(true, infoWindow, map.getCenter());
+            }
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        let infoWindow = new google.maps.InfoWindow();
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+});
+
+function requestLocationPermission() {
+    navigator.geolocation.getCurrentPosition((position) => {
+        // We have location.
+        console.log("We have location.");
+        handleHasLocation(position);
+    }, (error) => {
+        // We don't have location.
+        console.log("We don't have location.");
     });
+}
+
+function handleHasLocation(position) {
+    const pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+    };
+    map.setCenter(pos);
+    new google.maps.Marker({
+        position: {lat: 42.506682, lng: -71.097164},
+        map: map,
+    });
+
+    // Get mushrooms in user location
+    const urlParams = new URLSearchParams(window.location.search);
+    const taxon_id = urlParams.get('taxon_id');
+    if (taxon_id != null && taxon_id !== "") {
+        getObservations(taxon_id, position.coords.latitude, position.coords.longitude);
+    } else {
+        getObservations_withoutID(position.coords.latitude, position.coords.longitude);
+    }
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {

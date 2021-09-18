@@ -19,7 +19,7 @@ function onUserType() {
             }
             let searchResult = $("<div class='search-result'>" +
                 "<span><span>" + commonName + "</span><br/><span>(" + item['taxon']['name'] + ")</span></span>" +
-                "  <img src='" + photoName + "'/>" +
+                "  <img src='" + photoName + "' onerror='this.src=\"/static/generic_mushroom.svg\"' />" +
                 "</div>");
             searchResult.click(function () {
                 // This runs when user clicks on a result.
