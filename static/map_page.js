@@ -11,10 +11,22 @@ function initMap() {
     });
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     console.log("Page is loaded.");
     if (navigator.geolocation) {
-        navigator.permissions.query({name:'geolocation'}).then((status) => {
+        if (!navigator.permissions) {
+            const locationButton = document.createElement("button");
+            locationButton.textContent = "Allow access to nearest location.";
+            locationButton.classList.add("btn");
+            locationButton.classList.add("btn-primary");
+            map.controls[google.maps.ControlPosition.CENTER].push(locationButton);
+            locationButton.addEventListener("click", () => {
+                requestLocationPermission();
+                locationButton.remove();
+            });
+            return;
+        }
+        navigator.permissions.query({name: 'geolocation'}).then((status) => {
             if (status.state === "prompt") {
                 const locationButton = document.createElement("button");
                 locationButton.textContent = "Allow access to nearest location.";
@@ -27,7 +39,7 @@ $(document).ready(function() {
                 });
             } else if (status.state === "granted") {
                 requestLocationPermission();
-            } else  if (status.state === "denied") {
+            } else if (status.state === "denied") {
                 let infoWindow = new google.maps.InfoWindow();
                 handleLocationError(true, infoWindow, map.getCenter());
             }
