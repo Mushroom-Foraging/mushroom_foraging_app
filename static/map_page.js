@@ -58,6 +58,7 @@ function requestLocationPermission() {
         handleHasLocation(position);
     }, (error) => {
         // We don't have location.
+        console.error(error);
         console.log("We don't have location.");
     });
 }
