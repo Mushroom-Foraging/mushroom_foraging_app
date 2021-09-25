@@ -23,29 +23,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mushrooms Finder</title>
-
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MED612DMJ0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-MED612DMJ0');
+    </script>
     <style>
         #footer {
             position: absolute;
             bottom: 0;
         }
 
-        {# SMALL SCREENS ONLY #}
-        @media only screen and (max-width: 768px) {
-            .inner_container {
-                flex-direction: column;
-            }
-
-            .left {
-                width: 100%;
-                flex-direction: row;
-                display: flex;
-            }
-
-            .right {
-                width: 100%;
-            }
-        }
 
         {# MAIN SCREEN ONLY #}
         .inner_container {
@@ -134,12 +127,32 @@
             display: none;
         }
 
-        {#.loading-icon {#}
-        {#    width: 60px;#}
-        {#    height: 60px;#}
-        {#    background-color: red;#}
-        {#    position: ;#}
-        {#}#}
+        {# SMALL SCREENS ONLY #}
+        @media only screen and (max-width: 768px) {
+            .inner_container {
+                flex-direction: column-reverse;
+                flex: 1;
+            }
+
+            .left {
+                height: 50%;
+                width: 100%;
+                overflow-y: auto;
+
+            }
+
+            .right {
+                height: 50%;
+            }
+
+            .left .top {
+                display: none;
+            }
+
+            #footer {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -184,7 +197,7 @@
         <div class="right">
             <div id="map"/>
         </div>
-{#        <div class="loading-icon" />#}
+        {#        <div class="loading-icon" />#}
     </div>
     <div id="footer">
         <span style="color: #afafaf;">Built for mushroom foragers by Chana Lim</span>

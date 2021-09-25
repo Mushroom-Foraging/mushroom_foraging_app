@@ -14,6 +14,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mushrooms Finder</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MED612DMJ0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-MED612DMJ0');
+    </script>
+    <style>
+        #honey_mushroom_img {
+            float: right;
+            width: 300px;
+            height: auto;
+            padding-left: 20px;
+        }
+
+        #birch_img {
+            float: left;
+            width: 300px;
+            height: auto;
+            padding-right: 20px;
+        }
+
+        .text_container {
+            padding-right: 50px;
+            padding-left: 50px;
+
+        }
+
+        {# SMALL SCREENS ONLY #}
+        @media only screen and (max-width: 768px) {
+            #birch_img, #honey_mushroom_img {
+                width: 100%;
+                padding-bottom: 20px;
+            }
+
+            .text_container {
+                margin: 20px;
+                padding-right: 0;
+                padding-left: 0;
+
+            }
+        }
+
+        .text_container
+    </style>
 </head>
 <body>
 <div id="second_bg">
@@ -27,10 +75,9 @@
     <div class="inner_container"
          style="background: rgba(255, 255, 255, 0.51);
          flex: 1;overflow-y: auto;">
-        <div class="text_container" style="padding-left: 50px;padding-right: 50px;">
+        <div class="text_container">
             <h1 class="entry-title" itemprop="headline">About Mushroom Finder</h1>
-            <p style="padding-right: 50px;"><img src="/static/birch.JPG"
-                                                 style="float: left;width: 300px;height: auto; padding-right: 20px;">
+            <p><img id="birch_img" src="/static/birch.JPG">
                 Thank you for clicking on the About page, If you are trying to learn more about this website and how it
                 came to be, then you have come
                 to the right place! This Mushroom Finder website was originally designed to be hosted in an application
@@ -43,8 +90,7 @@
             </p>
             <div></div>
             <h1 class="entry-title" itemprop="headline">Acknowledgment</h1>
-            <p><img src="/static/honey_mushroom.JPG"
-                    style="float: right;width: 300px;height: auto; padding-right: 20px;">
+            <p><img id="honey_mushroom_img" src="/static/honey_mushroom.JPG">
                 We would like to thank you <a href="https://www.inaturalist.org/">iNaturalist</a>,
                 an online social network of people sharing biodiversity information about nature,
                 for providing wonderful source of biological datasets through their iNat Restful API.
