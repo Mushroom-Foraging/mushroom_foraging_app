@@ -30,21 +30,25 @@ def save_observations(data):
     location_info = []
     location_path = os.path.join(script_dir, 'scripts/location_info.p')
     if os.path.exists(location_path):
-        location_info = pickle.load(open(location_path, 'rb'))
+        try:
+            location_info = pickle.load(open(location_path, 'rb'))
+        except:
+            location_info = []
     new_data = remove_seen(location_info, data)
     location_info = location_info + new_data
     pickle.dump(location_info, open(location_path, 'wb'))
     print(f"Saved {len(new_data)} new observations to file.")
 
 
-def inaturalist_request_observations(taxon_id, lat, lng):
+def inaturalist_request_observations(taxon_id, lat, lng, radius):
     url = "https://api.inaturalist.org/v1/observations/"
 
     querystring = {
         "taxon_id": taxon_id,
         "lat": lat,
         "lng": lng,
-        "radius": 50
+        "radius": max(0, min(90, int(radius)))
+
     }
     response = requests.request("GET", url, headers=None, params=querystring)
     if response.status_code != 200:
@@ -112,8 +116,9 @@ def mushroom_locations():
     taxon_id = request.args.get("taxon_id")
     lat = request.args.get("lat")
     lng = request.args.get("lng")
+    radius = request.args.get("radius")
     print(f"Getting observations coordinates from taxon ID: {taxon_id}")
-    return jsonify(inaturalist_request_observations(taxon_id, lat, lng))
+    return jsonify(inaturalist_request_observations(taxon_id, lat, lng, radius))
 
 
 @app.route('/api/v1/summary')

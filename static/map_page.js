@@ -1,5 +1,13 @@
 let map;
 
+function debounce(func, timeout = 300){
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+
 // Used, don't delete. Called from map.html
 // noinspection JSUnusedGlobalSymbols
 function initMap() {
@@ -9,6 +17,30 @@ function initMap() {
         zoom: 10,
         mapId: '55dfd65b84060eeb'
     });
+    let boundsChangedFunction = debounce(() => {
+        let bounds = map.getBounds();
+        let center = bounds.getCenter();
+        let northEast = bounds.getNorthEast();
+        let radius = google.maps.geometry.spherical.computeDistanceBetween(center, northEast);
+        let radiusMiles = Math.round(radius  / 1609.34);
+
+        // Get mushrooms in user location
+        const urlParams = new URLSearchParams(window.location.search);
+        const taxon_id = urlParams.get('taxon_id');
+        if (taxon_id != null && taxon_id !== "") {
+            getObservations(taxon_id, center.lat(), center.lng(), radiusMiles);
+        } else {
+            getObservations_withoutID(center.lat(), center.lng(), radiusMiles);
+        }
+    }, 1000);
+    map.addListener("zoom_changed", () => {
+        console.log("zoom_changed");
+        boundsChangedFunction();
+    });
+    map.addListener("dragend", () => {
+        console.log("dragend");
+        boundsChangedFunction();
+    })
 }
 
 $(document).ready(function () {
@@ -78,9 +110,9 @@ function handleHasLocation(position) {
     const urlParams = new URLSearchParams(window.location.search);
     const taxon_id = urlParams.get('taxon_id');
     if (taxon_id != null && taxon_id !== "") {
-        getObservations(taxon_id, position.coords.latitude, position.coords.longitude);
+        getObservations(taxon_id, position.coords.latitude, position.coords.longitude, 40);
     } else {
-        getObservations_withoutID(position.coords.latitude, position.coords.longitude);
+        getObservations_withoutID(position.coords.latitude, position.coords.longitude, 40);
     }
 }
 
@@ -94,19 +126,24 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.open(map);
 }
 
-function getObservations(taxon_id, lat, lng) {
-    $.get("/api/v1/locations?taxon_id=" + taxon_id + "&lat=" + lat + "&lng=" + lng, function (data) {
+function getObservations(taxon_id, lat, lng, radius) {
+    $.get("/api/v1/locations?taxon_id=" + taxon_id + "&lat=" + lat + "&lng=" + lng + "&radius=" + radius, function (data) {
         console.log(data);
         plotMushroomMarkers(data)
     })
 }
 
-function getObservations_withoutID(lat, lng) {
+function getObservations_withoutID(lat, lng, radius) {
     const mushroom_and_lichens = 47169;
-    getObservations(mushroom_and_lichens, lat, lng);
+    getObservations(mushroom_and_lichens, lat, lng, radius);
 }
 
+let currentMarkers = [];
 function plotMushroomMarkers(observations) {
+    for (let marker of currentMarkers) {
+        marker.setMap(null)
+    }
+    currentMarkers = [];
     for (let item of observations) {
         let url = "/static/generic_mushroom.svg";
         if (item['photos'].length > 0) {
@@ -123,6 +160,7 @@ function plotMushroomMarkers(observations) {
             icon: image,
             map: map,
         });
+        currentMarkers.push(marker);
         marker.addListener("click", () => {
             populateDetails(item);
         });
