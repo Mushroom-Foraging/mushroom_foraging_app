@@ -172,7 +172,12 @@ function populateDetails(observation) {
     if (observation['photos'].length > 0) {
         $(".mushroom_image").attr("src", observation['photos'][0].replace('square', 'large'));
     }
-    $("#mushroom_title").text(observation['preferred_common_name']);
+    if (observation['preferred_common_name'] != null) {
+        $("#mushroom_title").text(observation['preferred_common_name']);
+    } else {
+        $("#mushroom_title").text(observation['name']);
+    }
+
     $("#mushroom_scientific").text(observation['name']);
     $("#mushroom_address").text(observation['name']);
 
@@ -181,12 +186,7 @@ function populateDetails(observation) {
         let splitUrl = url.split('/');
         let id = splitUrl[splitUrl.length - 1];
 
-        $('.circular').show();
-        $("#mushroom_description").hide();
-
         $.get("/api/v1/summary?id=" + id, function (data) {
-            $('.circular').hide();
-            $("#mushroom_description").show();
             $("#mushroom_description").text(data);
         });
     }

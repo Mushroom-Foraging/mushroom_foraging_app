@@ -103,10 +103,11 @@
             margin-bottom: 5px
         }
 
+        {# SMALL SCREENS ONLY #}
         @media only screen and (max-width: 768px) {
             #title {
                 font-size: 17pt;
-                margin-top: 135px;
+                margin-top: 200px;
             }
             #second_bg {
                 background-position: -110px !important;
@@ -120,11 +121,10 @@
 <body>
 <div id="second_bg">
     <div class="topnav">
-        <a href="/" id="brand-logo"><img src="/static/mushroom_logo.svg"></a>
+        <a href="/" id="brand-logo"><img src="/static/mushroom_logo.svg"> Home</a>
         <a href="contact"><i class="fas fa-paper-plane"></i> Contact</a>
         <a href="about"><i class="fas fa-info-circle"></i> About</a>
         <a href="map"><i class="fas fa-tree"></i> Map</a>
-        <a class="active" href="/"><i class="fa fa-home"></i> Home</a>
     </div>
     <h1 id="title">Mushroom Finder</h1>
     <div id="search_wrapper">
