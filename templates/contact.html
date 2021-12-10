@@ -60,6 +60,10 @@
             form {
                 width: 100%;
             }
+            .topnav {
+                display: flex;
+                flex-direction: row-reverse;
+            }
         }
     </style>
 </head>
@@ -67,9 +71,9 @@
 <div id="second_bg">
     <div class="topnav">
         <a href="/" id="brand-logo"><img src="/static/mushroom_logo.svg"> Home</a>
-        <a href="map"><i class="fas fa-tree"></i> Map</a>
-        <a href="about"><i class="fas fa-info-circle"></i> About</a>
         <a class="active" href="contact"><i class="fas fa-paper-plane"></i> Contact</a>
+        <a href="about"><i class="fas fa-info-circle"></i> About</a>
+        <a href="map"><i class="fas fa-tree"></i> Map</a>
     </div>
     <div class="inner_container" style="background: rgba(255, 255, 255, 0.51);flex: 1;overflow-y: auto;">
         <form method="post">
