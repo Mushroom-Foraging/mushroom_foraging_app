@@ -130,4 +130,4 @@ def mushroom_summary():
 
 if __name__ == '__main__':
     app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.run(debug=True, extra_files=['templates/home.html'], host='0.0.0.0')
+    app.run(debug=True, extra_files=['templates/home.html'], host='0.0.0.0', port=8082)

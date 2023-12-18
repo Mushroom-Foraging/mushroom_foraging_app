@@ -1,0 +1,31 @@
+name: publish
+on: [push]
+jobs:
+  publish-gunicorn:
+    name: Publish Mushroom App
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Login to GitHub Container Registry
+      
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build gunicorn
+        run: |
+          docker build -f docker/gunicorn/Dockerfile --tag ghcr.io/mushroom-foraging/mushroom-foraging-app-gunicorn:latest .
+
+      - name: Push gunicorn
+        run: |
+          docker push ghcr.io/mushroom-foraging/mushroom-foraging-app-gunicorn:latest
+
+      - name: Build
+        run: |
+          docker build -f docker/nginx/Dockerfile --tag ghcr.io/mushroom-foraging/mushroom-foraging-app-nginx:latest .
+
+      - name: Push Nginx
+        run: |
+          docker push ghcr.io/mushroom-foraging/mushroom-foraging-app-nginx:latest
