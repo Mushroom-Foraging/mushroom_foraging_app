@@ -22,3 +22,6 @@ Written in Javascript, HTML, and CSS.
   <img src="https://github.com/Mushroom-Foraging/mushroom_foraging_app/blob/master/static/home_page.png?raw=true" width="1600"/>
 </p>
 
+## How to run locally
+
+To run locally, just run `python3 app.py` then you can access the website through http://localhost:8082/
