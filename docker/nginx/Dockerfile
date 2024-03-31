@@ -7,3 +7,5 @@ COPY docker/nginx/nginx.conf /etc/nginx/conf.d
 COPY static /usr/src/app/static
 
 RUN apk add certbot certbot-nginx
+
+RUN certbot_renew_script.sh
