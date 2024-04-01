@@ -10,4 +10,4 @@ COPY static /usr/src/app/static
 
 RUN apk add certbot certbot-nginx
 
-RUN /bin/certbot_renew_script.sh
+RUN echo "0 23 * * * certbot renew" | crontab -
